@@ -1,5 +1,5 @@
 import Logo from "../Common/Logo";
-import Nav from "../Common/Nav";
+import Nav from "../Common/Nav/Nav";
 
 export default function Footer() {
   return (

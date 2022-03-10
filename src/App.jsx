@@ -1,19 +1,22 @@
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header";
+import Feed from "./Components/Main/Feed/Feed";
 import Main from "./Components/Main/Main";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Chat from "./Components/Main/Chat/Chat";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
       <Main>
-        <h1>
-          Voluptates consectetur cursus voluptates per cillum cum vero orci rerum. Maecenas odit! Voluptate architecto!
-          Consequatur eos! Eros, libero dignissimos? Vitae porta beatae id, quia.
-        </h1>
+        <Routes>
+          <Route path='/' element={<Feed />} />
+          <Route path='/chat' element={<Chat />} />
+        </Routes>
       </Main>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
