@@ -1,3 +1,11 @@
+.chat-container {
+  height: 0;
+}
+
 .msg-block {
   max-width: 90%;
+}
+
+.messages-container {
+  overflow-y: auto;
 }
