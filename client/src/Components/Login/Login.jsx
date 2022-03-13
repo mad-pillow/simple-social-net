@@ -14,11 +14,25 @@ export default function Login() {
               <h1 className='h3 mb-4 fw-normal'>Please log in or sign up</h1>
 
               <div className='form-floating' bis_skin_checked='1'>
-                <input type='email' className='form-control' id='floatingInput' placeholder='name@example.com' />
+                <input
+                  type='email'
+                  className='form-control'
+                  name='email'
+                  id='floatingInput'
+                  placeholder='name@example.com'
+                  required
+                />
                 <label for='floatingInput'>Email address</label>
               </div>
               <div className='form-floating mt-2' bis_skin_checked='1'>
-                <input type='password' className='form-control' id='floatingPassword' placeholder='Password' />
+                <input
+                  type='password'
+                  className='form-control'
+                  name='password'
+                  id='floatingPassword'
+                  placeholder='Password'
+                  required
+                />
                 <label for='floatingPassword'>Password</label>
               </div>
 

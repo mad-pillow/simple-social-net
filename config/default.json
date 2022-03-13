@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "mongoDbUri": "mongodb+srv://Mad-Pillow:y5kDD1sEKBz4zUzR@cluster0.probm.mongodb.net/ssn?retryWrites=true&w=majority",
+  "jwtSecret": "Mad Pillow likes Node.js"
+}
