@@ -6,6 +6,8 @@ import Chat from "./Components/Main/Chat/Chat";
 import About from "./Components/Main/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./app.scss";
+import Login from "./Components/Login/Login";
+import "bootstrap";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           </Routes>
         </Main>
         <Footer />
+        <Login />
       </div>
     </BrowserRouter>
   );
