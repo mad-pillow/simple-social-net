@@ -52,6 +52,7 @@ export default function Login() {
   };
 
   const handleLogIn = async () => {
+    console.log(personData);
     try {
       const data = await request('/api/auth/login', 'POST', { ...personData });
       auth.login(data.token, data.userId, personData.email);

@@ -53,7 +53,7 @@ router.post(
 router.post(
   '/signup',
   [
-    body('email', 'Wrong email style').isEmail(),
+    body('email', 'Wrong email style').normalizeEmail().isEmail(),
     body('password', 'Password must contain 6 symbols or more').isLength({
       min: 6,
     }),
