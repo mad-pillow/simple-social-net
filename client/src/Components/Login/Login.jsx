@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
+import { runToastWarning } from '../../helpers/runToastWarn';
 import Logo from '../Common/Logo/Logo';
-import { Toast } from 'bootstrap';
 import WarningToast from './Toast/WarningToast';
+import Spinner from '../Common/Spinner';
+import { AuthContext } from '../../context/authContext';
 
 export default function Login() {
+  const auth = useContext(AuthContext);
   const [personData, setPersonData] = useState({ email: '', password: '' });
-  const { loading, error, request } = useHttp();
+  const { loading, warning, request } = useHttp();
   const [isEmailValid, setIsEmailValid] = useState(null);
   const [isPasswordValid, setIsPasswordValid] = useState(null);
-
   const handleDataChange = (e) => {
     const { name, value } = e.target;
 
@@ -34,25 +36,23 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log('🚀 ~ file: Login.jsx ~ line 38 ~ useEffect ~ error', error);
-    if (error) {
-      const toastElements = document.querySelectorAll('.warningToast');
-
-      toastElements.forEach((element) => {
-        const toast = new Toast(element);
-
-        toast.show();
-      });
+    if (warning?.data?.message) {
+      runToastWarning();
     }
-  }, [error]);
+  }, [warning]);
 
   const handleSignUp = async () => {
     try {
-      const data = await request('/api/auth/signup', 'POST', { ...personData });
+      await request('/api/auth/signup', 'POST', { ...personData });
     } catch (e) {}
   };
 
-  const handleLogIn = async () => {};
+  const handleLogIn = async () => {
+    try {
+      const data = await request('/api/auth/login', 'POST', { ...personData });
+      auth.login(data.token, data.id);
+    } catch (e) {}
+  };
 
   return (
     <div
@@ -62,9 +62,10 @@ export default function Login() {
       aria-labelledby="loginModalLabel"
       aria-hidden="true"
     >
-      <WarningToast warning={error} />
+      <WarningToast warning={warning} />
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
+          {loading ? <Spinner /> : ''}
           <div className="modal-header">
             <Logo />
             <button
@@ -114,6 +115,7 @@ export default function Login() {
                   type="button"
                   className="btn btn-outline-primary me-2"
                   onClick={handleLogIn}
+                  disabled={loading}
                 >
                   Log in
                 </button>
@@ -121,6 +123,7 @@ export default function Login() {
                   type="button"
                   className="btn btn-primary"
                   onClick={handleSignUp}
+                  disabled={loading}
                 >
                   Sign up
                 </button>

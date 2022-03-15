@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [warning, setWarning] = useState(null);
 
   const request = useCallback(
     async (url, method = 'GET', body = null, headers = {}) => {
@@ -26,19 +26,17 @@ export const useHttp = () => {
         }
 
         setLoading(false);
+        setWarning({ success: true, data });
+
         return data;
       } catch (e) {
-        console.log(
-          '🚀 ~ file: http.hook.js ~ line 31 ~ e',
-          JSON.parse(e.message)
-        );
         setLoading(false);
-        setError(JSON.parse(e.message));
+        setWarning({ success: false, data: JSON.parse(e.message) });
         throw e;
       }
     },
     []
   );
 
-  return { loading, request, error };
+  return { loading, request, warning };
 };

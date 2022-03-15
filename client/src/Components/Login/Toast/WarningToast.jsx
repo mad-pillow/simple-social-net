@@ -1,26 +1,30 @@
 export default function WarningToast({ warning }) {
-  let warningMessages = [];
+  const success = warning?.success;
+  const data = warning?.data;
+  let messages = [];
 
-  if (warning) {
-    warningMessages = warning.errors
-      ? warning.errors.map((error) => error.msg)
-      : [warning.message];
+  if (data) {
+    messages = data.errors
+      ? data.errors.map((error) => error.msg)
+      : [data.message];
   }
 
   return (
     <div aria-live="polite" aria-atomic="true" className="position-relative">
       <div className="toast-container position-absolute top-0 start-50 translate-middle-x p-3">
-        {warningMessages.map((message, index) => {
+        {messages.map((message, index) => {
           return (
             <div
-              key={index}
-              className="toast warningToast align-items-center text-white bg-danger border-0"
+              key={Date.now() + String(index)}
+              className={`toast warningToast align-items-center text-white border-0 ${
+                success ? 'bg-success' : 'bg-danger'
+              }`}
               role="alert"
               aria-live="assertive"
               aria-atomic="true"
             >
               <div className="d-flex">
-                <div className="toast-body">{message}</div>
+                <strong className="toast-body">{message}</strong>
                 <button
                   type="button"
                   className="btn-close btn-close-white me-2 m-auto"
