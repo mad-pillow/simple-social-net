@@ -54,7 +54,7 @@ export default function Login() {
   const handleLogIn = async () => {
     try {
       const data = await request('/api/auth/login', 'POST', { ...personData });
-      auth.login(data.token, data.id, personData.email);
+      auth.login(data.token, data.userId, personData.email);
       modal.hide();
     } catch (e) {}
   };

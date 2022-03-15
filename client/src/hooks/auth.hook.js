@@ -14,13 +14,14 @@ export const useAuth = () => {
 
     localStorage.setItem(
       STORE_NAME,
-      JSON.stringify({ userId: id, token: jwtToken, email })
+      JSON.stringify({ userId: id, token: jwtToken, email: email })
     );
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    setEmail(null);
 
     localStorage.removeItem(STORE_NAME);
   }, []);
@@ -29,7 +30,7 @@ export const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(STORE_NAME));
 
     if (data && data.token) {
-      login(data.token, data.userId);
+      login(data.token, data.userId, data.email);
     }
   }, [login]);
 
