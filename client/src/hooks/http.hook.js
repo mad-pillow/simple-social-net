@@ -20,17 +20,20 @@ export const useHttp = () => {
         });
 
         const data = await response.json();
-        console.log('🚀 ~ file: http.hook.js ~ line 23 ~ data', data);
 
         if (!response.ok) {
-          throw new Error(data.message || 'Something went wrong');
+          throw new Error(JSON.stringify(data) || 'Something went wrong');
         }
 
         setLoading(false);
         return data;
       } catch (e) {
+        console.log(
+          '🚀 ~ file: http.hook.js ~ line 31 ~ e',
+          JSON.parse(e.message)
+        );
         setLoading(false);
-        setError(e.message);
+        setError(JSON.parse(e.message));
         throw e;
       }
     },

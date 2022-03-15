@@ -34,6 +34,7 @@ export default function Login() {
   };
 
   useEffect(() => {
+    console.log('🚀 ~ file: Login.jsx ~ line 38 ~ useEffect ~ error', error);
     if (error) {
       const toastElements = document.querySelectorAll('.warningToast');
 
@@ -61,7 +62,7 @@ export default function Login() {
       aria-labelledby="loginModalLabel"
       aria-hidden="true"
     >
-      <WarningToast warningText={error} />
+      <WarningToast warning={error} />
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
