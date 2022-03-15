@@ -2,21 +2,21 @@ const { Router } = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const router = Router();
 
 router.post(
   '/login',
   [
-    check('email', 'Wrong password').normalizeEmail().isEmail(),
-    check('password', 'Enter password').exists(),
+    body('email', 'Wrong password').normalizeEmail().isEmail(),
+    body('password', 'Enter password').exists(),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
 
-      if (!errors.isEmpty) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
           message: 'Wrong data have been entered when logging in',
@@ -45,7 +45,7 @@ router.post(
 
       res.json({ token, userId: user.id });
     } catch (e) {
-      res.status(500).json({ message: 'Something gone wrong' });
+      res.status(500).json({ message: 'Something went wrong' });
     }
   }
 );
@@ -53,8 +53,8 @@ router.post(
 router.post(
   '/signup',
   [
-    check('email', 'Wrong password').isEmail(),
-    check('password', 'Password must contain 6 symbols or more').isLength({
+    body('email', 'Wrong email style').isEmail(),
+    body('password', 'Password must contain 6 symbols or more').isLength({
       min: 6,
     }),
   ],
@@ -62,7 +62,7 @@ router.post(
     try {
       const errors = validationResult(req);
 
-      if (!errors.isEmpty) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
           message: 'Wrong data have been entered when signing up',
@@ -85,7 +85,7 @@ router.post(
       await user.save();
       res.status(201).json({ message: 'User has been added' });
     } catch (e) {
-      res.status(500).json({ message: 'Something gone wrong' });
+      res.status(500).json({ message: 'Something went wrong' });
     }
   }
 );
