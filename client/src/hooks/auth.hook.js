@@ -5,14 +5,16 @@ const STORE_NAME = 'userData';
 export const useAuth = () => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [email, setEmail] = useState(null);
 
-  const login = useCallback((jwtToken, id) => {
+  const login = useCallback((jwtToken, id, email) => {
     setToken(jwtToken);
     setUserId(id);
+    setEmail(email);
 
     localStorage.setItem(
       STORE_NAME,
-      JSON.stringify({ userId: id, token: jwtToken })
+      JSON.stringify({ userId: id, token: jwtToken, email })
     );
   }, []);
 
@@ -31,5 +33,5 @@ export const useAuth = () => {
     }
   }, [login]);
 
-  return { login, logout, token, userId };
+  return { login, logout, token, userId, email };
 };

@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 import { runToastWarning } from '../../helpers/runToastWarn';
 import Logo from '../Common/Logo/Logo';
 import WarningToast from './Toast/WarningToast';
 import Spinner from '../Common/Spinner';
-import { AuthContext } from '../../context/authContext';
+import { AuthContext } from '../../context/AuthContext';
+import { ModalContext } from '../../context/ModalContext';
 
 export default function Login() {
   const auth = useContext(AuthContext);
@@ -12,6 +13,9 @@ export default function Login() {
   const { loading, warning, request } = useHttp();
   const [isEmailValid, setIsEmailValid] = useState(null);
   const [isPasswordValid, setIsPasswordValid] = useState(null);
+  const modalRef = useRef();
+  const modal = useContext(ModalContext);
+
   const handleDataChange = (e) => {
     const { name, value } = e.target;
 
@@ -50,7 +54,8 @@ export default function Login() {
   const handleLogIn = async () => {
     try {
       const data = await request('/api/auth/login', 'POST', { ...personData });
-      auth.login(data.token, data.id);
+      auth.login(data.token, data.id, personData.email);
+      modal.hide();
     } catch (e) {}
   };
 
@@ -58,6 +63,7 @@ export default function Login() {
     <div
       className="modal fade"
       id="loginModal"
+      ref={modalRef}
       tabIndex="-1"
       aria-labelledby="loginModalLabel"
       aria-hidden="true"
