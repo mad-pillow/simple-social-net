@@ -1,4 +1,7 @@
 import './feed.scss';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
 
 const posts = [
   {
@@ -37,9 +40,23 @@ const posts = [
 ];
 
 export default function Feed() {
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
-      <h2 className="feed-title">Feed</h2>
+      <div className="d-flex align-items-start">
+        <h2 className="feed-title">Feed</h2>
+        {isLoggedIn ? (
+          <Link
+            className="btn btn-outline-primary ms-2"
+            to="/host/new-topic"
+            role="button"
+          >
+            +
+          </Link>
+        ) : (
+          ''
+        )}
+      </div>
       {posts.map((post) => {
         return (
           <div
