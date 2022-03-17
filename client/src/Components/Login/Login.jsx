@@ -71,7 +71,7 @@ export default function Login() {
       <WarningToast warning={warning} />
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
-          {loading ? <Spinner /> : ''}
+          {loading && <Spinner />}
           <div className="modal-header">
             <Logo />
             <button
@@ -88,9 +88,9 @@ export default function Login() {
               <div className="form-floating" bis_skin_checked="1">
                 <input
                   type="email"
-                  className={`form-control ${
-                    isEmailValid === false ? 'is-invalid' : ''
-                  } ${isEmailValid === true ? 'is-valid' : ''}`}
+                  className={`form-control 
+                  ${isEmailValid === false && 'is-invalid'} 
+                  ${isEmailValid === true && 'is-valid'}`}
                   name="email"
                   id="floatingInput"
                   placeholder="name@example.com"
@@ -103,9 +103,9 @@ export default function Login() {
               <div className="form-floating mt-2" bis_skin_checked="1">
                 <input
                   type="password"
-                  className={`form-control ${
-                    isPasswordValid === false ? 'is-invalid' : ''
-                  } ${isPasswordValid === true ? 'is-valid' : ''}`}
+                  className={`form-control 
+                  ${isPasswordValid === false && 'is-invalid'} 
+                  ${isPasswordValid === true && 'is-valid'}`}
                   name="password"
                   id="floatingPassword"
                   placeholder="Password"

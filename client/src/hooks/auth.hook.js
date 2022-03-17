@@ -12,7 +12,7 @@ export const useAuth = () => {
     setUserId(id);
     setEmail(email);
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       STORE_NAME,
       JSON.stringify({ userId: id, token: jwtToken, email: email })
     );
@@ -23,11 +23,11 @@ export const useAuth = () => {
     setUserId(null);
     setEmail(null);
 
-    localStorage.removeItem(STORE_NAME);
+    sessionStorage.removeItem(STORE_NAME);
   }, []);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(STORE_NAME));
+    const data = JSON.parse(sessionStorage.getItem(STORE_NAME));
 
     if (data && data.token) {
       login(data.token, data.userId, data.email);

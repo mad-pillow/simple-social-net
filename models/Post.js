@@ -2,9 +2,9 @@ const { Schema, model, Types } = require('mongoose');
 
 const schema = new Schema({
   owner: { type: Types.ObjectId, ref: 'User' },
-  email: { type: String, required: true },
-  content: { type: String, required: true },
+  content: { type: String, required: true, unique: true },
   date: { type: Date, default: Date.now },
+  email: { type: String },
 });
 
-module.exports = model('Topic', schema);
+module.exports = model('Post', schema);
